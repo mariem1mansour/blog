@@ -8,7 +8,8 @@ const signUp = async (req, res) => {
       message: "user already exists ⚠️",
     });
   } else {
-    await userModel.insertMany({ name, email, password });
+    const hash = bcrypt.hashSync(password, 8);
+    await userModel.insertMany({ name, email, password:hash });
     res.json({ message: "success 🟩" });
   }
 };
