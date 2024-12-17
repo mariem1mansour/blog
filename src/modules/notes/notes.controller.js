@@ -12,4 +12,10 @@ let note =   await notesModel.findByIdAndUpdate(id, { title, desc }, { new: true
 if(!note) return res.json("note not found")
   res.json({ message: "note updated successfully !",note });
 };
-export { addNote, updateNote };
+const deleteNote = async (req, res) => {
+  const {id } = req.body;
+let note =   await notesModel.findByIdAndDelete(id);
+if(!note) return res.json("note not found")
+  res.json({ message: "note deleted successfully !",note });
+};
+export { addNote, updateNote , deleteNote };
