@@ -6,4 +6,10 @@ const addNote = async (req, res) => {
   res.json({ message: "note created successfully !" });
 };
 
-export {addNote}
+const updateNote = async (req, res) => {
+  const { title, desc, id } = req.body;
+let note =   await notesModel.findByIdAndUpdate(id, { title, desc }, { new: true });
+if(!note) return res.json("note not found")
+  res.json({ message: "note updated successfully !",note });
+};
+export { addNote, updateNote };
