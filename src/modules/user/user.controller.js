@@ -21,7 +21,7 @@ const signIn = async (req, res) => {
   if (user && bcrypt.compareSync(password, user.password)) {
     res.json({ message: "connected with token ✅" });
   } else {
-    res.json({ message: "email or password incorrect ❌" });
+    res.json({ message: "email or password incorrect 😓" });
   }
 };
-export { signUp , signIn};
+export { signUp, signIn };

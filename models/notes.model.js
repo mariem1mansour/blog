@@ -5,4 +5,4 @@ const notesSchema = mongoose.Schema({
   desc: String,
   createdBy: mongoose.SchemaTypes.ObjectId,
 });
-export const userModel = mongoose.model("note", notesSchema);
+export const notesModel = mongoose.model("note", notesSchema);
