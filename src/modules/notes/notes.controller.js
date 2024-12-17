@@ -27,4 +27,10 @@ const getAllNotes = async (req, res) => {
   const notes = await notesModel.find({});
   res.json({ message: "all notes found successfully !", notes });
 };
-export { addNote, updateNote, deleteNote , getAllNotes };
+
+const getUserNotes = async (req, res) => {
+  const {createdBy}= req.params;
+  const notes = await notesModel.find({createdBy});
+  res.json({ message: " notes found successfully !", notes });
+};
+export { addNote, updateNote, deleteNote , getAllNotes  , getUserNotes};
