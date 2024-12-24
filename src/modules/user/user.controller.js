@@ -1,3 +1,4 @@
+import  jwt  from "jsonwebtoken";
 import { userModel } from "../../../models/user.model.js";
 import bcrypt from "bcrypt";
 const signUp = async (req, res) => {
@@ -19,7 +20,8 @@ const signIn = async (req, res) => {
   const user = await userModel.findOne({ email });
 
   if (user && bcrypt.compareSync(password, user.password)) {
-    res.json({ message: "connected with token ✅" });
+    let TOKEN = jwt.sign({id:user.id,name : user.name},"mariem")
+    res.json({ message: "connected with token ✅",TOKEN });
   } else {
     res.json({ message: "email or password incorrect 😓" });
   }
