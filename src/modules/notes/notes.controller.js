@@ -1,9 +1,16 @@
 import { notesModel } from "../../../models/notes.model.js";
+import  jwt  from "jsonwebtoken";
 
 const addNote = async (req, res) => {
-  const { title, desc, createdBy } = req.body;
-  await notesModel.insertMany({ title, desc, createdBy });
-  res.json({ message: "note created successfully !" });
+  const { title, desc, createdBy, token } = req.body;
+  jwt.verify(token, "mariem", async (err, decoded) => {
+    if (err) { 
+      res.json({ message: "invalid token 😒", err });
+    } else {
+      await notesModel.insertMany({ title, desc, createdBy });
+      res.json({ message: "note created successfully !" });
+    }
+  });
 };
 
 const updateNote = async (req, res) => {
@@ -24,13 +31,13 @@ const deleteNote = async (req, res) => {
 };
 
 const getAllNotes = async (req, res) => {
-  const notes = await notesModel.find({}).populate('createdBy','name-_id');
+  const notes = await notesModel.find({}).populate("createdBy", "name-_id");
   res.json({ message: "all notes found successfully !", notes });
 };
 
 const getUserNotes = async (req, res) => {
-  const {createdBy}= req.params;
-  const notes = await notesModel.find({createdBy});
+  const { createdBy } = req.params;
+  const notes = await notesModel.find({ createdBy });
   res.json({ message: " notes found successfully !", notes });
 };
-export { addNote, updateNote, deleteNote , getAllNotes  , getUserNotes};
+export { addNote, updateNote, deleteNote, getAllNotes, getUserNotes };
